@@ -98,9 +98,6 @@ file_custom.write("#\n"
                   "EMAIL_HOST_PORT = '" + email_host_port + "'\n"
                   "EMAIL_USE_TLS = " + email_use_tls + "\n"
                   "EMAIL_USE_SSL = " + email_use_ssl + "\n")
-if email_use_ssl:
-    file_custom.write("SESSION_COOKIE_SECURE = True\n"
-                      "CSRF_COOKIE_SECURE = True\n")
 
 authent_tablename = config.get("settings", "authent_tablename")
 authent_database = config.get("settings", "authent_dbname")
