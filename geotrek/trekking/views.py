@@ -394,7 +394,12 @@ class WebLinkCreatePopup(CreateView):
     def form_valid(self, form):
         self.object = form.save()
         return HttpResponse("""
-            <script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s");</script>
+            <script type="text/javascript">opener.dismissAddAnotherPopup(window, "%s", "%s"); 
+            window.onunload = refreshParent;
+            function refreshParent() {
+                window.opener.location.reload();
+                window.opener.document.getElementById("tab-advanced").click();
+            } </script>
         """ % (escape(form.instance._get_pk_val()), escape(form.instance)))
 
 
