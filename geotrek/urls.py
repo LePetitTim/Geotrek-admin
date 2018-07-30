@@ -15,6 +15,7 @@ handler404 = 'mapentity.views.handler404'
 
 
 urlpatterns = [
+    url(r'^tinymce/', include('tinymce.urls')),
     url(r'^$', common_views.home, name='home'),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': settings.ROOT_URL + '/'}, name='logout',),
