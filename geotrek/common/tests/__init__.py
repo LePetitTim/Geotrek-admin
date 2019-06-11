@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
+from unittest import skipIf
 
 from django.contrib.auth.models import Permission
 from django.utils import translation
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 # Workaround https://code.djangoproject.com/ticket/22865
 from geotrek.common.models import FileType  # NOQA
@@ -23,7 +25,10 @@ class CommonTest(AuthentFixturesTest, TranslationResetMixin, MapEntityTest):
     api_prefix = '/api/en/'
 
     def get_bad_data(self):
-        return {'topology': 'doh!'}, _(u'Topology is not valid.')
+        if settings.TREKKING_TOPOLOGY_ENABLED:
+            return {'topology': 'doh!'}, _(u'Topology is not valid.')
+        else:
+            return {'geom': 'doh!'}, _(u'Invalid geometry value.')
 
     def test_structure_is_set(self):
         if not hasattr(self.model, 'structure'):
